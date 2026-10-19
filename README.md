@@ -1,7 +1,5 @@
 # PrivMeta EXIF/Metadata Privacy Based Tool
 
----
-
 <table>
   <tr>
     <td valign="top" style="padding-right: 20px;">
