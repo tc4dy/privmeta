@@ -1,5 +1,5 @@
  <div align="center">
-  <img src="privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
+  <img src="/photos/privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
 </div>
 
 **PrivMeta** is a command-line utility for inspecting, cleaning, and modifying EXIF and metadata across images, PDFs, office documents, audio, and video files.
