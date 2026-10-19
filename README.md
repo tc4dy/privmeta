@@ -23,6 +23,8 @@
 | `fake` | Inject realistic camera, lens, and GPS metadata. | JPEG, PNG, WebP |
 | `shred` | Metadata destruction, re-encoding, and overwrite passes. | JPEG, PNG, WebP, PDF, DOCX, XLSX, PPTX, MP3, FLAC, MP4, MOV |
 
+---
+
 <div align="center">
   <img src="/photos/privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
 </div>
