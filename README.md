@@ -23,6 +23,10 @@
 | `fake` | Inject realistic camera, lens, and GPS metadata. | JPEG, PNG, WebP |
 | `shred` | Metadata destruction, re-encoding, and overwrite passes. | JPEG, PNG, WebP, PDF, DOCX, XLSX, PPTX, MP3, FLAC, MP4, MOV |
 
+<div align="center">
+  <img src="/photos/privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
+</div>
+
 **[+] What It Actually Does**
 
 - **EXIF Stripping:** Removes camera make, model, software, ISO, aperture, shutter speed, and timestamps.
@@ -36,10 +40,6 @@
 - **Timeline Simulation:** Distributes timestamps sequentially across multiple files to simulate a chronological event.
 - **Anti-Forensic Shredding:** Re-encodes images to alter original quantization tables and encoder signatures.
 - **Multi-Pass Overwrite:** Repeatedly writes and strips metadata to reduce residual metadata in the resulting file structure.
-
-<div align="center">
-  <img src="/photos/privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
-</div>
 
 ### [+] Performance & Security
 
