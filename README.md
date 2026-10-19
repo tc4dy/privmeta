@@ -2,13 +2,11 @@
   <img src="privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
 </div>
 
-<br>
-
 **PrivMeta** is a command-line utility for inspecting, cleaning, and modifying EXIF and metadata across images, PDFs, office documents, audio, and video files.
 
 Metadata often contains more than you intend to share: exact GPS coordinates, timestamps, camera serial numbers, editing software history, and even embedded thumbnails of the original image. PrivMeta gives you full local control over this data layer. It makes no network requests, and it never modifies files without your explicit instruction.
 
-<br>
+---
 
 ## [+] Features
 
@@ -18,8 +16,6 @@ Metadata often contains more than you intend to share: exact GPS coordinates, ti
 | `clean` | Strip EXIF, GPS, XMP, IPTC, ICC, and comments. | JPEG, PNG, WebP |
 | `fake` | Inject realistic camera, lens, and GPS metadata. | JPEG, PNG, WebP |
 | `shred` | Metadata destruction, re-encoding, and overwrite passes. | JPEG, PNG, WebP, PDF, DOCX, XLSX, PPTX, MP3, FLAC, MP4, MOV |
-
-<br>
 
 **[+] What It Actually Does**
 
@@ -35,15 +31,13 @@ Metadata often contains more than you intend to share: exact GPS coordinates, ti
 - **Anti-Forensic Shredding:** Re-encodes images to alter original quantization tables and encoder signatures.
 - **Multi-Pass Overwrite:** Repeatedly writes and strips metadata to reduce residual metadata in the resulting file structure.
 
-<br>
-
 ### [+] Performance & Security
 
 - **Zero Network Calls:** Operates entirely offline. No analytics, crash reports, or external API calls.
 - **In-Memory Streams:** Uses low-memory streaming where possible, helping it run on Termux and low-end devices.
 - **Minimal Core Dependencies:** `clean` and `fake` require `piexif` and `Pillow`. PDF and audio support are optional add-ons.
 
-<br>
+---
 
 ## [>] Quick Install
 
@@ -76,7 +70,7 @@ privmeta --help
 - `mutagen` — Audio metadata support.
 - `ffmpeg` — Video metadata support (system package).
 
-<br>
+---
 
 ## [</>] Usage
 
@@ -221,7 +215,7 @@ privmeta shred --quality 95 photo.jpg
 | `--quality N` | Re-encode the image at a specified JPEG quality, altering its original encoding characteristics. |
 | `--check` | Validate the resulting file for malformed metadata and inconsistent values. |
 
-<br>
+---
 
 ## [!] Privacy Notes
 
