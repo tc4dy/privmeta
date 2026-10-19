@@ -1,0 +1,60 @@
+{
+  "sony_a7iv": [
+    {"name": "FE 24-70mm F2.8 GM", "focal_min": 24, "focal_max": 70, "aperture_max": 2.8},
+    {"name": "FE 35mm F1.4 GM", "focal_min": 35, "focal_max": 35, "aperture_max": 1.4},
+    {"name": "FE 50mm F1.2 GM", "focal_min": 50, "focal_max": 50, "aperture_max": 1.2},
+    {"name": "FE 85mm F1.4 GM", "focal_min": 85, "focal_max": 85, "aperture_max": 1.4}
+  ],
+  "sony_a7iii": [
+    {"name": "FE 24-105mm F4 G OSS", "focal_min": 24, "focal_max": 105, "aperture_max": 4.0},
+    {"name": "FE 35mm F1.8", "focal_min": 35, "focal_max": 35, "aperture_max": 1.8},
+    {"name": "FE 55mm F1.8 ZA", "focal_min": 55, "focal_max": 55, "aperture_max": 1.8}
+  ],
+  "canon_r6": [
+    {"name": "RF24-70mm F2.8 L IS USM", "focal_min": 24, "focal_max": 70, "aperture_max": 2.8},
+    {"name": "RF50mm F1.2 L USM", "focal_min": 50, "focal_max": 50, "aperture_max": 1.2},
+    {"name": "RF85mm F1.2 L USM", "focal_min": 85, "focal_max": 85, "aperture_max": 1.2}
+  ],
+  "canon_r5": [
+    {"name": "RF24-105mm F4 L IS USM", "focal_min": 24, "focal_max": 105, "aperture_max": 4.0},
+    {"name": "RF15-35mm F2.8 L IS USM", "focal_min": 15, "focal_max": 35, "aperture_max": 2.8}
+  ],
+  "nikon_z6ii": [
+    {"name": "NIKKOR Z 24-70mm f/2.8 S", "focal_min": 24, "focal_max": 70, "aperture_max": 2.8},
+    {"name": "NIKKOR Z 50mm f/1.2 S", "focal_min": 50, "focal_max": 50, "aperture_max": 1.2}
+  ],
+  "nikon_z7ii": [
+    {"name": "NIKKOR Z 24-70mm f/4 S", "focal_min": 24, "focal_max": 70, "aperture_max": 4.0},
+    {"name": "NIKKOR Z 35mm f/1.8 S", "focal_min": 35, "focal_max": 35, "aperture_max": 1.8}
+  ],
+  "fuji_xt4": [
+    {"name": "XF23mmF1.4 R", "focal_min": 23, "focal_max": 23, "aperture_max": 1.4},
+    {"name": "XF18-55mmF2.8-4 R LM OIS", "focal_min": 18, "focal_max": 55, "aperture_max": 2.8}
+  ],
+  "fuji_x100v": [
+    {"name": "FUJINON 23mm F2", "focal_min": 23, "focal_max": 23, "aperture_max": 2.0}
+  ],
+  "panasonic_s5": [
+    {"name": "LUMIX S 20-60mm F3.5-5.6", "focal_min": 20, "focal_max": 60, "aperture_max": 3.5},
+    {"name": "LUMIX S 50mm F1.8", "focal_min": 50, "focal_max": 50, "aperture_max": 1.8}
+  ],
+  "leica_q2": [
+    {"name": "SUMMILUX 1:1.7/28 ASPH.", "focal_min": 28, "focal_max": 28, "aperture_max": 1.7}
+  ],
+  "iphone_14_pro": [
+    {"name": "iPhone 14 Pro back triple camera 6.86mm f/1.78", "focal_min": 6, "focal_max": 77, "aperture_max": 1.78}
+  ],
+  "iphone_13": [
+    {"name": "iPhone 13 back dual wide camera 5.1mm f/1.6", "focal_min": 5, "focal_max": 26, "aperture_max": 1.6}
+  ],
+  "samsung_s22": [
+    {"name": "Samsung Galaxy S22 Rear Wide Camera", "focal_min": 6, "focal_max": 24, "aperture_max": 1.8}
+  ],
+  "google_pixel_7": [
+    {"name": "Pixel 7 back camera 6.81mm f/1.85", "focal_min": 6, "focal_max": 21, "aperture_max": 1.85}
+  ],
+  "olympus_om1": [
+    {"name": "OLYMPUS M.12-40mm F2.8", "focal_min": 12, "focal_max": 40, "aperture_max": 2.8},
+    {"name": "OLYMPUS M.17mm F1.2 Pro", "focal_min": 17, "focal_max": 17, "aperture_max": 1.2}
+  ]
+}
