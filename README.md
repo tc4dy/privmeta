@@ -1,8 +1,4 @@
-<div align="center">
-  <img src="/photos/privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
-</div>
-
----
+# PrivMeta EXIF/Metadata Privacy Based Tool
 
 <table>
   <tr>
@@ -40,6 +36,10 @@
 - **Timeline Simulation:** Distributes timestamps sequentially across multiple files to simulate a chronological event.
 - **Anti-Forensic Shredding:** Re-encodes images to alter original quantization tables and encoder signatures.
 - **Multi-Pass Overwrite:** Repeatedly writes and strips metadata to reduce residual metadata in the resulting file structure.
+
+<div align="center">
+  <img src="/photos/privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
+</div>
 
 ### [+] Performance & Security
 
