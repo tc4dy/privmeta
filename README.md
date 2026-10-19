@@ -1,20 +1,14 @@
 <div align="center">
-  <img src="privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
+  <img src="/photos/privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
 </div>
-
-<br>
 
 **PrivMeta** is a command-line utility for inspecting, cleaning, and modifying EXIF and metadata across images, PDFs, office documents, audio, and video files.
 
 Metadata often contains more than you intend to share: exact GPS coordinates, timestamps, camera serial numbers, editing software history, and even embedded thumbnails of the original image. PrivMeta gives you full local control over this data layer. It makes no network requests, and it never modifies files without your explicit instruction.
 
-<br>
-
 <div align="center">
-  <img src="privmeta.png" alt="PrivMeta Logo" width="250">
+  <img src="/photos/privmeta.png" alt="PrivMeta Logo" width="250">
 </div>
-
-<br>
 
 ---
 
