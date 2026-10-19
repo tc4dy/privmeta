@@ -1,4 +1,5 @@
-# PrivMeta EXIF/Metadata Privacy Based Tool - Cleaner - Shredder - Faker 
+# PrivMeta EXIF/Metadata Privacy Based Tool
+## EXIF Cleaner - Shredder - Faker 
 
 ---
 
