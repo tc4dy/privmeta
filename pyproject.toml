@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "privmeta"
+version = "0.1.1"
+description = "EXIF and metadata cleaner, faker and shredder for images and documents"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [{name = "tc4dy"}]
+dependencies = [
+    "click",
+    "piexif",
+    "Pillow",
+]
+
+[project.optional-dependencies]
+pdf = ["pypdf"]
+audio = ["mutagen"]
+all = ["pypdf>=4.0", "mutagen"]
+
+[project.scripts]
+privmeta = "privmeta.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["privmeta*"]
+
+[tool.setuptools.package-data]
+privmeta = ["profiles/*.json"]
