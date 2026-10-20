@@ -20,7 +20,6 @@ Metadata often contains more than you intend to share: exact GPS coordinates, ti
 <br>
 
 ---
-
 ## [+] Features
 
 | Command | Action | Supported Formats |
