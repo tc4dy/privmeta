@@ -1,7 +1,6 @@
-import os
 import sys
 
-from .commands import clean, fake, info, shred
+from .commands import clean, fake, info as info_cmd, shred
 from .output import ask, fail, info, ok
 
 
@@ -143,5 +142,5 @@ def launch():
     elif choice == "info":
         namespace = _info_args()
         if namespace:
-            info.run(namespace)
+            info_cmd.run(namespace)
     ok("done")
