@@ -146,7 +146,7 @@ def inspect_png(path):
     return found
 
 
-def _strip_png(source, target, drop_text=True, drop_icc=True, drop_exif=False):
+def _strip_png(source, target, drop_text=True, drop_icc=True, drop_exif=False, drop_xmp=True):
     with open(source, "rb") as handle:
         data = handle.read()
     if not data.startswith(PNG_SIGNATURE):
@@ -159,7 +159,12 @@ def _strip_png(source, target, drop_text=True, drop_icc=True, drop_exif=False):
         chunk_type = data[pos + 4:pos + 8]
         chunk = data[pos:pos + 12 + length]
         drop = False
-        if chunk_type in PNG_TEXT_CHUNKS and drop_text:
+        if chunk_type == b"iTXt":
+            if drop_xmp and b"XML:com.adobe.xmp" in chunk:
+                drop = True
+            elif drop_text and b"XML:com.adobe.xmp" not in chunk:
+                drop = True
+        elif chunk_type in (b"tEXt", b"zTXt") and drop_text:
             drop = True
         elif chunk_type == PNG_ICC_CHUNK and drop_icc:
             drop = True
@@ -225,20 +230,20 @@ def _strip_webp(source, target, drop_exif=True, drop_xmp=True, drop_icc=True):
     return dropped
 
 
-def strip(source, target, drop_xmp=True, drop_iptc=True, drop_icc=True, drop_comments=True, drop_exif=False):
+def xmp_strip(source, target, drop_xmp=True, drop_iptc=True, drop_icc=True, drop_comments=True, drop_exif=False):
     family, label = detect(source)
     if family != IMAGE:
         raise UnsupportedFormat(f"Metadata strip is not supported for {label}")
     if label == "jpeg":
         return _strip_jpeg(source, target, drop_xmp, drop_iptc, drop_icc, drop_comments)
     if label == "png":
-        return _strip_png(source, target, drop_comments, drop_icc, drop_exif)
+        return _strip_png(source, target, drop_comments, drop_icc, drop_exif, drop_xmp)
     if label == "webp":
         return _strip_webp(source, target, drop_exif, drop_xmp, drop_icc)
     raise UnsupportedFormat(f"Metadata strip is not supported for {label}")
 
 
-def inspect(source):
+def xmp_inspect(source):
     family, label = detect(source)
     if family != IMAGE:
         raise UnsupportedFormat(f"Inspection is not supported for {label}")
@@ -249,3 +254,28 @@ def inspect(source):
     if label == "webp":
         return inspect_webp(source)
     raise UnsupportedFormat(f"Inspection is not supported for {label}")
+
+
+def get_exif_bytes(path):
+    family, label = detect(path)
+    if label == "png":
+        with open(path, "rb") as handle:
+            data = handle.read()
+        pos = len(PNG_SIGNATURE)
+        while pos + 8 <= len(data):
+            length = struct.unpack(">I", data[pos:pos + 4])[0]
+            chunk_type = data[pos + 4:pos + 8]
+            if chunk_type == PNG_EXIF_CHUNK:
+                return data[pos + 8:pos + 8 + length]
+            pos += 12 + length
+    elif label == "webp":
+        with open(path, "rb") as handle:
+            data = handle.read()
+        pos = 12
+        while pos + 8 <= len(data):
+            chunk_type = data[pos:pos + 4]
+            length = struct.unpack("<I", data[pos + 4:pos + 8])[0]
+            if chunk_type == b"EXIF":
+                return data[pos + 8:pos + 8 + length]
+            pos += 8 + length + (length & 1)
+    return None
