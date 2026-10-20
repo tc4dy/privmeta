@@ -1,3 +1,4 @@
+import piexif
 from ..errors import PrivMetaError, UnsupportedFormat
 from ..fsio import collect
 from ..media import audio, office, pdf, video
@@ -15,10 +16,22 @@ _MEDIA = {
 
 def _image_info(path):
     lines = []
-    try:
-        data = exif.read(path)
-    except PrivMetaError:
-        data = {"0th": {}, "Exif": {}, "GPS": {}, "1st": {}}
+    family, label = detect(path)
+    data = {"0th": {}, "Exif": {}, "GPS": {}, "1st": {}}
+
+    if label in ("png", "webp"):
+        exif_bytes = xmp.get_exif_bytes(path)
+        if exif_bytes:
+            try:
+                data = piexif.load(exif_bytes)
+            except Exception:
+                pass
+    else:
+        try:
+            data = exif.read(path)
+        except PrivMetaError:
+            pass
+
     for section in ("0th", "Exif", "GPS", "1st"):
         bucket = data.get(section, {})
         if bucket:
