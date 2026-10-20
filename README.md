@@ -2,7 +2,7 @@
  
 [![Tests](https://github.com/tc4dy/privmeta/actions/workflows/test.yml/badge.svg)](https://github.com/tc4dy/privmeta/actions/workflows/test.yml)
 ![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)
-![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)
+![License: MIT](https://img.shields.io/badge/license-MIT-purple.svg)
 ![Metadata](https://img.shields.io/badge/EXIF%2FMetadata-Privacy-orange)
  
 **PrivMeta** is a command-line utility for inspecting, cleaning, and modifying EXIF and metadata across images, PDFs, office documents, audio, and video files.
