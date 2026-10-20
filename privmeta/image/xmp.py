@@ -230,7 +230,7 @@ def _strip_webp(source, target, drop_exif=True, drop_xmp=True, drop_icc=True):
     return dropped
 
 
-def xmp_strip(source, target, drop_xmp=True, drop_iptc=True, drop_icc=True, drop_comments=True, drop_exif=False):
+def strip(source, target, drop_xmp=True, drop_iptc=True, drop_icc=True, drop_comments=True, drop_exif=False):
     family, label = detect(source)
     if family != IMAGE:
         raise UnsupportedFormat(f"Metadata strip is not supported for {label}")
@@ -243,7 +243,7 @@ def xmp_strip(source, target, drop_xmp=True, drop_iptc=True, drop_icc=True, drop
     raise UnsupportedFormat(f"Metadata strip is not supported for {label}")
 
 
-def xmp_inspect(source):
+def inspect(source):
     family, label = detect(source)
     if family != IMAGE:
         raise UnsupportedFormat(f"Inspection is not supported for {label}")
