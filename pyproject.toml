@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "privmeta"
-version = "0.1.1"
+version = "0.1.2"
 description = "EXIF and metadata cleaner, faker and shredder for images and documents"
 readme = "README.md"
 license = {text = "MIT"}
@@ -19,7 +19,7 @@ dependencies = [
 [project.optional-dependencies]
 pdf = ["pypdf"]
 audio = ["mutagen"]
-all = ["pypdf>=4.0", "mutagen"]
+all = ["pypdf", "mutagen"]
 
 [project.scripts]
 privmeta = "privmeta.cli:main"
