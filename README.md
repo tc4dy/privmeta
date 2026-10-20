@@ -11,7 +11,9 @@
   <img src="/photos/privmetalogo.png" alt="PrivMeta Logo" width="140" style="border-radius: 15px; transform: rotate(-12deg);">
 </div>
 Metadata often contains more than you intend to share: exact GPS coordinates, timestamps, camera serial numbers, editing software history, and even embedded thumbnails of the original image. PrivMeta gives you full local control over this data layer. It makes no network requests, and it never modifies files without your explicit instruction.
- <br>
+
+---
+
 <div align="center">
   <img src="/photos/privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
 </div>
