@@ -17,7 +17,6 @@ Metadata often contains more than you intend to share: exact GPS coordinates, ti
 <div align="center">
   <img src="/photos/privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
 </div>
-<br>
 
 ---
 ## [+] Features
