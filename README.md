@@ -1,16 +1,21 @@
 # PrivMeta EXIF/Metadata Privacy Based Tool
+
+[![Tests](https://github.com/tc4dy/privmeta/actions/workflows/test.yml/badge.svg)](https://github.com/tc4dy/privmeta/actions/workflows/test.yml)
+![Python](https://img.shields.io/badge/python-3.9%2B-blue.svg)
+![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)
+![Metadata](https://img.shields.io/badge/EXIF%2FMetadata-Privacy-orange)
+
+<div align="center">
+  <img src="/photos/privmetalogo.png" alt="PrivMeta Logo" width="140" style="border-radius: 15px;">
+  <br><br>
+  <img src="/photos/privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
+</div>
+
 <br>
-<table>
-  <tr>
-    <td valign="top" style="padding-right: 20px;">
-      <strong>PrivMeta</strong> is a command-line utility for inspecting, cleaning, and modifying EXIF and metadata across images, PDFs, office documents, audio, and video files.<br><br>
-      Metadata often contains more than you intend to share: exact GPS coordinates, timestamps, camera serial numbers, editing software history, and even embedded thumbnails of the original image. PrivMeta gives you full local control over this data layer. It makes no network requests, and it never modifies files without your explicit instruction.
-    </td>
-    <td valign="middle" align="center" width="200" style="padding: 10px;">
-      <img src="/photos/privmetalogo.png" alt="PrivMeta Logo" width="140" style="border-radius: 15px;">
-    </td>
-  </tr>
-</table>
+
+**PrivMeta** is a command-line utility for inspecting, cleaning, and modifying EXIF and metadata across images, PDFs, office documents, audio, and video files.
+
+Metadata often contains more than you intend to share: exact GPS coordinates, timestamps, camera serial numbers, editing software history, and even embedded thumbnails of the original image. PrivMeta gives you full local control over this data layer. It makes no network requests, and it never modifies files without your explicit instruction.
 
 ---
 
@@ -24,10 +29,6 @@
 | `shred` | Metadata destruction, re-encoding, and overwrite passes. | JPEG, PNG, WebP, PDF, DOCX, XLSX, PPTX, MP3, FLAC, MP4, MOV |
 
 ---
-
-<div align="center">
-  <img src="/photos/privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
-</div>
 
 **[+] What It Actually Does**
 
