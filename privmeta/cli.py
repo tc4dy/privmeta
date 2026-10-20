@@ -21,7 +21,9 @@ def _clear():
 
 def _safe(func, args):
     try:
-        return func(args)
+        code = func(args)
+        if code is not None:
+            sys.exit(code)
     except PrivMetaError as exc:
         click.echo(f"[-] {exc}", err=True)
         sys.exit(2)
@@ -53,6 +55,8 @@ def cli(ctx):
 @click.option("--dry-run", is_flag=True, help="Report the plan without writing.")
 @click.option("--fail-fast", is_flag=True, help="Stop at the first error.")
 def clean_cmd(paths, **kwargs):
+    if kwargs.get("rename") and kwargs.get("inplace"):
+        raise click.UsageError("--rename cannot be used with --inplace")
     namespace = type("Args", (), {})()
     namespace.paths = list(paths)
     for key, value in kwargs.items():
