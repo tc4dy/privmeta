@@ -95,7 +95,7 @@ def _clean_image(source, target, plan, label):
         drop_iptc=plan["iptc"],
         drop_icc=plan["icc"],
         drop_comments=plan["comments"],
-        drop_exif=plan["exif"],
+        drop_exif=plan["exif"] or plan["gps"],
     )
 
 
