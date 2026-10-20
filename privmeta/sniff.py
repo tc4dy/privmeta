@@ -25,6 +25,9 @@ def _read_head(path, size=32):
 def detect(path):
     head = _read_head(path, 32)
     if head[4:8] == b"ftyp":
+        major_brand = head[8:12]
+        if major_brand in (b"heic", b"heix", b"hevc", b"heim", b"heis", b"mif1", b"msf1"):
+            return IMAGE, "heic"
         return VIDEO, "mp4"
     if head[:4] == b"RIFF" and head[8:12] == b"WEBP":
         return IMAGE, "webp"
