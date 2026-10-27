@@ -52,7 +52,10 @@ def random_point(center_lat, center_lon, radius_km):
     distance = random.uniform(0.0, radius_km)
     bearing = random.uniform(0.0, 2.0 * math.pi)
     lat_offset = distance / 111.32
-    lon_offset = distance / (111.32 * math.cos(math.radians(center_lat)))
+    cos_lat = math.cos(math.radians(center_lat))
+    if cos_lat == 0.0:
+        cos_lat = 1e-6
+    lon_offset = distance / (111.32 * cos_lat)
     lat = center_lat + lat_offset * math.cos(bearing)
     lon = center_lon + lon_offset * math.sin(bearing)
     return max(-90.0, min(90.0, lat)), max(-180.0, min(180.0, lon))
@@ -63,9 +66,15 @@ def _dms_rational(value):
     degrees = int(absolute)
     minutes_float = (absolute - degrees) * 60.0
     minutes = int(minutes_float)
-    seconds = (minutes_float - minutes) * 60.0
-    seconds_rational = (int(round(seconds * 10000)), 10000)
-    return ((degrees, 1), (minutes, 1), seconds_rational)
+    seconds_float = (minutes_float - minutes) * 60.0
+    seconds_ticks = int(round(seconds_float * 10000))
+    if seconds_ticks >= 60 * 10000:
+        seconds_ticks = 0
+        minutes += 1
+    if minutes >= 60:
+        minutes = 0
+        degrees += 1
+    return ((degrees, 1), (minutes, 1), (seconds_ticks, 10000))
 
 
 def build(lat, lon, altitude=None, direction=None):
