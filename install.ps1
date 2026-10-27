@@ -4,7 +4,6 @@ $ErrorActionPreference = "Stop"
 $Repo = "https://github.com/tc4dy/privmeta.git"
 $ArchiveUrl = "https://github.com/tc4dy/privmeta/archive/refs/heads/main.zip"
 $MinVersion = [version]"3.9"
-$PkgName = "privmeta"
 
 function Write-Step($msg) {
     Write-Host "[>] " -ForegroundColor Cyan -NoNewline
@@ -47,12 +46,20 @@ function Get-Python {
     Stop-Install "Python is not installed or not on PATH."
 }
 
+function Split-PythonCmd($Cmd) {
+    $exe = $Cmd[0]
+    $extra = @()
+    if ($Cmd.Count -gt 1) {
+        $extra = $Cmd[1..($Cmd.Count - 1)]
+    }
+    return @($exe, $extra)
+}
+
 function Get-PythonVersion($Cmd) {
-    $parts = $Cmd
+    $parts = Split-PythonCmd $Cmd
     $exe = $parts[0]
-    $args = @()
-    if ($parts.Count -gt 1) { $args = $parts[1..($parts.Count - 1)] }
-    $raw = & $exe @args -c "import sys; print('{}.{}.{}'.format(*sys.version_info[:3]))" 2>$null
+    $extra = $parts[1]
+    $raw = & $exe @extra -c "import sys; print('{}.{}.{}'.format(*sys.version_info[:3]))" 2>$null
     if ($LASTEXITCODE -ne 0 -or -not $raw) {
         Stop-Install "Python is not usable."
     }
@@ -62,6 +69,27 @@ function Get-PythonVersion($Cmd) {
 function Test-Version($Current, $Minimum) {
     $c = [version]$Current
     return $c -ge $Minimum
+}
+
+function Get-UserScriptsDir($Cmd) {
+    $parts = Split-PythonCmd $Cmd
+    $exe = $parts[0]
+    $extra = $parts[1]
+    $raw = & $exe @extra -c "import sysconfig; print(sysconfig.get_path('scripts', scheme='nt_user'))" 2>$null
+    if ($LASTEXITCODE -ne 0 -or -not $raw) {
+        return $null
+    }
+    return $raw.Trim()
+}
+
+function Test-PathEntry($Haystack, $Needle) {
+    foreach ($part in $Haystack) {
+        if ([string]::IsNullOrWhiteSpace($part)) { continue }
+        if ($part.TrimEnd('\') -ieq $Needle.TrimEnd('\')) {
+            return $true
+        }
+    }
+    return $false
 }
 
 Write-Step "PrivMeta installer"
@@ -79,9 +107,9 @@ if (-not (Test-Version $CurrentVersion $MinVersion)) {
 Write-Ok ("python version: " + $CurrentVersion)
 
 Write-Step "checking pip"
-$pyExe = $PythonCmd[0]
-$pyArgs = @()
-if ($PythonCmd.Count -gt 1) { $pyArgs = $PythonCmd[1..($PythonCmd.Count - 1)] }
+$parts = Split-PythonCmd $PythonCmd
+$pyExe = $parts[0]
+$pyArgs = $parts[1]
 & $pyExe @pyArgs -m pip --version *> $null
 if ($LASTEXITCODE -ne 0) {
     Stop-Install "pip is not available for this Python."
@@ -168,30 +196,38 @@ try {
     }
 
     Write-Step "verifying installation"
-    $userScripts = Join-Path $env:APPDATA "Python\Scripts"
-    if (-not (($env:PATH -split ';') -contains $userScripts)) {
+    $userScripts = Get-UserScriptsDir $PythonCmd
+    if (-not $userScripts) {
+        $userScripts = Join-Path $env:APPDATA "Python\Scripts"
+    }
+    if (-not (Test-PathEntry ($env:PATH -split ';') $userScripts)) {
         Write-Warn ($userScripts + " is not in PATH")
         Write-Host "[?] " -ForegroundColor Cyan -NoNewline
         Write-Host ("add it to your user PATH now? (y/N): ") -NoNewline
         $reply = Read-Host
         if ($reply -match "^[yY]") {
             $oldPath = [Environment]::GetEnvironmentVariable("Path", "User")
-            if ($oldPath -notlike "*$userScripts*") {
-                [Environment]::SetEnvironmentVariable("Path", $oldPath + ";" + $userScripts, "User")
-                Write-Ok "PATH updated (open a new terminal)"
-            } else {
+            $userParts = if ($oldPath) { $oldPath -split ';' } else { @() }
+            if (Test-PathEntry $userParts $userScripts) {
                 Write-Ok "already present"
+            } else {
+                $prefix = if ($oldPath) { $oldPath.TrimEnd(';') + ";" } else { "" }
+                [Environment]::SetEnvironmentVariable("Path", $prefix + $userScripts, "User")
+                Write-Ok "PATH updated (open a new terminal)"
             }
         } else {
             Write-Warn ("add manually: " + $userScripts)
         }
     }
 
-    $privmetaCmd = Get-Command privmeta -ErrorAction SilentlyContinue
-    if ($privmetaCmd) {
+    $privmetaOnPath = Get-Command privmeta -ErrorAction SilentlyContinue
+    $privmetaExe = Join-Path $userScripts "privmeta.exe"
+    if ($privmetaOnPath) {
         Write-Ok "privmeta is available on PATH"
+    } elseif (Test-Path $privmetaExe) {
+        Write-Ok ("privmeta installed at " + $privmetaExe + " (restart terminal to use on PATH)")
     } else {
-        Write-Warn ("privmeta is not on PATH yet, try: " + (Join-Path $userScripts "privmeta.exe"))
+        Write-Warn "privmeta was not found; check pip output for errors"
     }
 
     Write-Host ""
