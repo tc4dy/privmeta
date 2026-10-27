@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 set -euo pipefail
 
 REPO="https://github.com/tc4dy/privmeta.git"
@@ -57,6 +56,17 @@ is_termux() {
     [ -n "${PREFIX:-}" ] && [ -d "${PREFIX}/bin" ]
 }
 
+user_bin_dir() {
+    local py="$1"
+    local user_base
+    user_base="$("$py" -m site --user-base 2>/dev/null || true)"
+    if [ -n "$user_base" ]; then
+        printf '%s/bin' "$user_base"
+        return 0
+    fi
+    printf '%s/.local/bin' "$HOME"
+}
+
 in_path() {
     case ":${PATH}:" in
         *:"$1":*) return 0 ;;
@@ -84,6 +94,7 @@ if is_termux; then
 fi
 
 WORK_DIR="$(mktemp -d)"
+LOG_FILE="${WORK_DIR}/pip.log"
 trap 'rm -rf "${WORK_DIR}"' EXIT
 
 step "fetching repository"
@@ -100,14 +111,20 @@ else
     if ! tar -xzf "$ARCHIVE" -C "$WORK_DIR"; then
         finish_fail "extracting archive failed."
     fi
-    mv "${WORK_DIR}/privmeta-main" "${WORK_DIR}/${PKG_NAME}" 2>/dev/null || true
+    if [ -d "${WORK_DIR}/${PKG_NAME}-main" ]; then
+        if ! mv "${WORK_DIR}/${PKG_NAME}-main" "${WORK_DIR}/${PKG_NAME}"; then
+            finish_fail "cannot prepare source directory."
+        fi
+    elif [ ! -d "${WORK_DIR}/${PKG_NAME}" ]; then
+        finish_fail "unexpected archive layout: source directory not found."
+    fi
 fi
 ok "source ready"
 
 step "installing package"
 cd "${WORK_DIR}/${PKG_NAME}"
-if ! $PIP_CMD install --user --upgrade . >/tmp/privmeta-install.log 2>&1; then
-    tail -n 30 /tmp/privmeta-install.log >&2 || true
+if ! $PIP_CMD install --user --upgrade . >"$LOG_FILE" 2>&1; then
+    tail -n 30 "$LOG_FILE" >&2 || true
     finish_fail "pip install failed. See log above."
 fi
 ok "package installed"
@@ -149,7 +166,7 @@ if ! command_exists ffmpeg; then
 fi
 
 step "verifying installation"
-USER_BIN="${HOME}/.local/bin"
+USER_BIN="$(user_bin_dir "$PY_BIN")"
 if ! in_path "$USER_BIN"; then
     warn "${USER_BIN} is not in PATH"
     SHELL_NAME="$(basename "${SHELL:-bash}")"
@@ -168,8 +185,12 @@ if ! in_path "$USER_BIN"; then
     read -r reply || reply="n"
     case "$reply" in
         [yY]|[yY][eE][sS])
-            printf '\nexport PATH="%s:$PATH"\n' "$USER_BIN" >> "$RC_FILE"
-            ok "PATH updated in ${RC_FILE} (restart your shell)"
+            if grep -qsF "$USER_BIN" "$RC_FILE" 2>/dev/null; then
+                ok "PATH already configured in ${RC_FILE}"
+            else
+                printf '\nexport PATH="%s:$PATH"\n' "$USER_BIN" >> "$RC_FILE"
+                ok "PATH updated in ${RC_FILE} (restart your shell)"
+            fi
             ;;
         *)
             warn "add it manually: export PATH=\"${USER_BIN}:\$PATH\""
@@ -179,8 +200,10 @@ fi
 
 if command_exists privmeta; then
     ok "privmeta is available on PATH"
+elif [ -x "${USER_BIN}/privmeta" ]; then
+    ok "privmeta installed at ${USER_BIN}/privmeta (restart your shell to use on PATH)"
 else
-    warn "privmeta is not on PATH yet, try: ${USER_BIN}/privmeta"
+    warn "privmeta was not found; check pip output for errors"
 fi
 
 printf '\n'
