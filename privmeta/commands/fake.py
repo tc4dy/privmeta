@@ -72,17 +72,29 @@ def _shutter(value):
     return (1, int(round(1.0 / value)))
 
 
-def _triplet(camera):
-    return (
-        random.choice(camera["isos"]),
-        random.choice(camera["apertures"]),
-        random.choice(camera["shutters"]),
-    )
+def _pick_iso(camera):
+    return random.choice(camera["isos"])
+
+
+def _pick_aperture(camera):
+    return random.choice(camera["apertures"])
+
+
+def _pick_shutter(camera):
+    return random.choice(camera["shutters"])
+
+
+def _pick_focal(camera, lens):
+    if lens:
+        return random.randint(lens["focal_min"], lens["focal_max"])
+    return random.randint(camera["focal_min"], camera["focal_max"])
 
 
 def _build_exif(camera, date_value, lens, city, radius, thumbnail_bytes):
-    iso, aperture, shutter = _triplet(camera)
-    focal = random.randint(camera["focal_min"], camera["focal_max"])
+    iso = _pick_iso(camera)
+    aperture = _pick_aperture(camera)
+    shutter = _pick_shutter(camera)
+    focal = _pick_focal(camera, lens)
     data = {
         "0th": {
             piexif.ImageIFD.Make: camera["make"],
