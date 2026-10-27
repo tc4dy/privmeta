@@ -55,48 +55,63 @@ def _exif_stage(source, stage, plan):
         shutil.copy2(source, stage)
 
 
+def _apply_source_mode(source, target):
+    try:
+        mode = os.stat(source).st_mode & 0o777
+    except OSError:
+        return
+    try:
+        os.chmod(target, mode)
+    except OSError:
+        pass
+
+
+def _clean_jpeg(source, target, plan):
+    exif_layer = plan["exif"] or plan["gps"] or plan["thumbnail"]
+    byte_layer = plan["xmp"] or plan["iptc"] or plan["icc"] or plan["comments"]
+    if exif_layer:
+        directory = os.path.dirname(os.path.abspath(target)) or "."
+        fd, stage = tempfile.mkstemp(dir=directory, prefix=".privmeta.")
+        os.close(fd)
+        _exif_stage(source, stage, plan)
+        byte_source = stage
+    else:
+        stage = None
+        byte_source = source
+    if byte_layer:
+        xmp.strip(
+            byte_source,
+            target,
+            drop_xmp=plan["xmp"],
+            drop_iptc=plan["iptc"],
+            drop_icc=plan["icc"],
+            drop_comments=plan["comments"],
+        )
+    else:
+        if byte_source != target:
+            if os.path.exists(target):
+                os.unlink(target)
+            os.replace(byte_source, target)
+    if stage and os.path.exists(stage) and stage != target:
+        os.unlink(stage)
+
+
 def _clean_image(source, target, plan, label):
     if not any(plan.values()):
         shutil.copy2(source, target)
-        return
-    exif_layer = plan["exif"] or plan["gps"] or plan["thumbnail"]
-    byte_layer = plan["xmp"] or plan["iptc"] or plan["icc"] or plan["comments"]
-    if label == "jpeg":
-        if exif_layer:
-            directory = os.path.dirname(os.path.abspath(target)) or "."
-            fd, stage = tempfile.mkstemp(dir=directory, prefix=".privmeta.")
-            os.close(fd)
-            _exif_stage(source, stage, plan)
-            byte_source = stage
-        else:
-            stage = None
-            byte_source = source
-        if byte_layer:
-            xmp.strip(
-                byte_source,
-                target,
-                drop_xmp=plan["xmp"],
-                drop_iptc=plan["iptc"],
-                drop_icc=plan["icc"],
-                drop_comments=plan["comments"],
-            )
-        else:
-            if byte_source != target:
-                if os.path.exists(target):
-                    os.unlink(target)
-                os.replace(byte_source, target)
-        if stage and os.path.exists(stage) and stage != target:
-            os.unlink(stage)
-        return
-    xmp.strip(
-        source,
-        target,
-        drop_xmp=plan["xmp"],
-        drop_iptc=plan["iptc"],
-        drop_icc=plan["icc"],
-        drop_comments=plan["comments"],
-        drop_exif=plan["exif"] or plan["gps"],
-    )
+    elif label == "jpeg":
+        _clean_jpeg(source, target, plan)
+    else:
+        xmp.strip(
+            source,
+            target,
+            drop_xmp=plan["xmp"],
+            drop_iptc=plan["iptc"],
+            drop_icc=plan["icc"],
+            drop_comments=plan["comments"],
+            drop_exif=plan["exif"] or plan["gps"],
+        )
+    _apply_source_mode(source, target)
 
 
 def _reset_time(path):
