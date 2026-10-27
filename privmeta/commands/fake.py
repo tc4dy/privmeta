@@ -18,6 +18,13 @@ _PROFILE_ROOT = os.path.join(
 )
 
 
+def _source_mode(path):
+    try:
+        return os.stat(path).st_mode & 0o777
+    except OSError:
+        return None
+
+
 def _load_json(name):
     path = os.path.join(_PROFILE_ROOT, name)
     try:
@@ -166,7 +173,8 @@ def _handle_one(source, args, cameras, lenses, cities, index, total, counters):
         chosen = _pick_date(args, index, total)
         payload = thumb.create(source) if args.thumbnail else None
         incoming = _build_exif(camera, chosen, lens, city, args.radius, payload)
-        target = resolve_output(source, args.output_dir)
+        target = resolve_output(source, args.output_dir, suffix="_faked")
+        mode = _source_mode(source) if args.inplace else None
         if args.preserve:
             final = _merge(exif.read(source), incoming)
         else:
@@ -174,6 +182,11 @@ def _handle_one(source, args, cameras, lenses, cities, index, total, counters):
         exif.write(source, final, target)
         if args.inplace:
             os.replace(target, source)
+            if mode is not None:
+                try:
+                    os.chmod(source, mode)
+                except OSError:
+                    pass
             target = source
         ok(f"faked: {source} -> {target}")
         counters["ok"] += 1
