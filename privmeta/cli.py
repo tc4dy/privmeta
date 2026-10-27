@@ -35,7 +35,8 @@ def _safe(func, args):
 @click.group(invoke_without_command=True)
 @click.pass_context
 def cli(ctx):
-    _clear()
+    if ctx.invoked_subcommand is None:
+        _clear()
     show()
     if ctx.invoked_subcommand is None:
         launch()
