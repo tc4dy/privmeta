@@ -1,4 +1,14 @@
 {
+  "sony_a1": {
+    "make": "SONY",
+    "model": "ILCE-1",
+    "software": "ILCE-1 v2.01",
+    "isos": [100, 200, 400, 800, 1600, 3200, 6400, 12800],
+    "apertures": [1.2, 1.4, 1.8, 2.8, 4.0, 5.6, 8.0],
+    "shutters": [0.00025, 0.0005, 0.001, 0.002, 0.004, 0.008, 0.016, 0.033],
+    "focal_min": 24,
+    "focal_max": 200
+  },
   "sony_a7iv": {
     "make": "SONY",
     "model": "ILCE-7M4",
@@ -9,6 +19,16 @@
     "focal_min": 24,
     "focal_max": 70
   },
+  "sony_a7rv": {
+    "make": "SONY",
+    "model": "ILCE-7RM5",
+    "software": "ILCE-7RM5 v2.00",
+    "isos": [100, 200, 400, 800, 1600, 3200, 6400],
+    "apertures": [1.4, 1.8, 2.8, 4.0, 5.6, 8.0],
+    "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 24,
+    "focal_max": 90
+  },
   "sony_a7iii": {
     "make": "SONY",
     "model": "ILCE-7M3",
@@ -16,6 +36,56 @@
     "isos": [100, 200, 400, 800, 1600, 3200, 6400],
     "apertures": [1.8, 2.8, 4.0, 5.6, 8.0],
     "shutters": [0.001, 0.002, 0.004, 0.008, 0.016, 0.033],
+    "focal_min": 24,
+    "focal_max": 105
+  },
+  "sony_a7siii": {
+    "make": "SONY",
+    "model": "ILCE-7SM3",
+    "software": "ILCE-7SM3 v3.01",
+    "isos": [80, 160, 320, 640, 1280, 2560, 5120, 10240],
+    "apertures": [1.2, 1.4, 1.8, 2.8, 4.0, 5.6],
+    "shutters": [0.00025, 0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 24,
+    "focal_max": 135
+  },
+  "sony_a6700": {
+    "make": "SONY",
+    "model": "ILCE-6700",
+    "software": "ILCE-6700 v1.02",
+    "isos": [100, 200, 400, 800, 1600, 3200, 6400],
+    "apertures": [1.4, 1.8, 2.8, 4.0, 5.6, 8.0],
+    "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 11,
+    "focal_max": 350
+  },
+  "sony_zv_e1": {
+    "make": "SONY",
+    "model": "ZV-E1",
+    "software": "ZV-E1 v1.00",
+    "isos": [80, 160, 320, 640, 1280, 2560, 5120],
+    "apertures": [1.4, 1.8, 2.8, 4.0, 5.6],
+    "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 11,
+    "focal_max": 50
+  },
+  "canon_r3": {
+    "make": "Canon",
+    "model": "Canon EOS R3",
+    "software": "Firmware Version 1.7.1",
+    "isos": [100, 200, 400, 800, 1600, 3200, 6400, 12800],
+    "apertures": [1.2, 1.4, 1.8, 2.8, 4.0, 5.6],
+    "shutters": [0.00025, 0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 24,
+    "focal_max": 200
+  },
+  "canon_r5": {
+    "make": "Canon",
+    "model": "Canon EOS R5",
+    "software": "Firmware Version 1.8.1",
+    "isos": [100, 200, 400, 800, 1600, 3200],
+    "apertures": [1.8, 2.8, 4.0, 5.6, 8.0],
+    "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
     "focal_min": 24,
     "focal_max": 105
   },
@@ -29,15 +99,85 @@
     "focal_min": 24,
     "focal_max": 70
   },
-  "canon_r5": {
+  "canon_r7": {
     "make": "Canon",
-    "model": "Canon EOS R5",
-    "software": "Firmware Version 1.8.1",
-    "isos": [100, 200, 400, 800, 1600, 3200],
+    "model": "Canon EOS R7",
+    "software": "Firmware Version 1.5.0",
+    "isos": [100, 200, 400, 800, 1600, 3200, 6400],
+    "apertures": [1.8, 2.8, 4.0, 5.6, 6.3, 8.0],
+    "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 18,
+    "focal_max": 400
+  },
+  "canon_r8": {
+    "make": "Canon",
+    "model": "Canon EOS R8",
+    "software": "Firmware Version 1.3.0",
+    "isos": [100, 200, 400, 800, 1600, 3200, 6400],
     "apertures": [1.8, 2.8, 4.0, 5.6, 8.0],
     "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
     "focal_min": 24,
     "focal_max": 105
+  },
+  "canon_r10": {
+    "make": "Canon",
+    "model": "Canon EOS R10",
+    "software": "Firmware Version 1.4.0",
+    "isos": [100, 200, 400, 800, 1600, 3200],
+    "apertures": [1.8, 2.8, 4.5, 5.6, 6.3, 8.0],
+    "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 18,
+    "focal_max": 150
+  },
+  "canon_r50": {
+    "make": "Canon",
+    "model": "Canon EOS R50",
+    "software": "Firmware Version 1.0.0",
+    "isos": [100, 200, 400, 800, 1600, 3200],
+    "apertures": [4.5, 5.6, 6.3, 7.1, 8.0],
+    "shutters": [0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 18,
+    "focal_max": 210
+  },
+  "nikon_z8": {
+    "make": "NIKON CORPORATION",
+    "model": "NIKON Z 8",
+    "software": "Ver.02.10",
+    "isos": [64, 100, 200, 400, 800, 1600, 3200, 6400, 12800],
+    "apertures": [1.2, 1.4, 1.8, 2.8, 4.0, 5.6, 8.0],
+    "shutters": [0.00025, 0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 24,
+    "focal_max": 200
+  },
+  "nikon_z9": {
+    "make": "NIKON CORPORATION",
+    "model": "NIKON Z 9",
+    "software": "Ver.05.10",
+    "isos": [64, 100, 200, 400, 800, 1600, 3200, 6400],
+    "apertures": [1.2, 1.4, 1.8, 2.8, 4.0, 5.6, 8.0],
+    "shutters": [0.00025, 0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 24,
+    "focal_max": 400
+  },
+  "nikon_z5": {
+    "make": "NIKON CORPORATION",
+    "model": "NIKON Z 5",
+    "software": "Ver.01.40",
+    "isos": [100, 200, 400, 800, 1600, 3200, 6400],
+    "apertures": [1.8, 2.8, 4.0, 5.6, 8.0],
+    "shutters": [0.001, 0.002, 0.004, 0.008, 0.016, 0.033],
+    "focal_min": 24,
+    "focal_max": 70
+  },
+  "nikon_z50": {
+    "make": "NIKON CORPORATION",
+    "model": "NIKON Z 50",
+    "software": "Ver.02.50",
+    "isos": [100, 200, 400, 800, 1600, 3200],
+    "apertures": [3.5, 4.5, 5.6, 6.3, 8.0],
+    "shutters": [0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 16,
+    "focal_max": 250
   },
   "nikon_z6ii": {
     "make": "NIKON CORPORATION",
@@ -59,6 +199,16 @@
     "focal_min": 24,
     "focal_max": 70
   },
+  "fuji_xt5": {
+    "make": "FUJIFILM",
+    "model": "X-T5",
+    "software": "Digital Camera X-T5 Ver2.10",
+    "isos": [125, 200, 400, 800, 1600, 3200, 6400],
+    "apertures": [1.2, 1.4, 2.0, 2.8, 4.0, 5.6, 8.0],
+    "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 16,
+    "focal_max": 56
+  },
   "fuji_xt4": {
     "make": "FUJIFILM",
     "model": "X-T4",
@@ -68,6 +218,16 @@
     "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
     "focal_min": 23,
     "focal_max": 55
+  },
+  "fuji_xh2": {
+    "make": "FUJIFILM",
+    "model": "X-H2",
+    "software": "Digital Camera X-H2 Ver3.10",
+    "isos": [125, 200, 400, 800, 1600, 3200, 6400],
+    "apertures": [1.2, 1.4, 2.0, 2.8, 4.0, 5.6, 8.0],
+    "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 16,
+    "focal_max": 600
   },
   "fuji_x100v": {
     "make": "FUJIFILM",
@@ -79,6 +239,26 @@
     "focal_min": 23,
     "focal_max": 23
   },
+  "fuji_gfx100ii": {
+    "make": "FUJIFILM",
+    "model": "GFX100 II",
+    "software": "Digital Camera GFX100 II Ver1.30",
+    "isos": [100, 200, 400, 800, 1600, 3200],
+    "apertures": [2.0, 2.8, 4.0, 5.6, 8.0],
+    "shutters": [0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 32,
+    "focal_max": 110
+  },
+  "panasonic_s5ii": {
+    "make": "Panasonic",
+    "model": "DC-S5M2",
+    "software": "Ver.2.2",
+    "isos": [100, 200, 400, 800, 1600, 3200, 6400],
+    "apertures": [1.8, 2.8, 4.0, 5.6, 8.0],
+    "shutters": [0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 24,
+    "focal_max": 105
+  },
   "panasonic_s5": {
     "make": "Panasonic",
     "model": "DC-S5",
@@ -88,6 +268,26 @@
     "shutters": [0.001, 0.002, 0.004, 0.008, 0.016, 0.033],
     "focal_min": 20,
     "focal_max": 60
+  },
+  "panasonic_gh6": {
+    "make": "Panasonic",
+    "model": "DC-GH6",
+    "software": "Ver.2.5",
+    "isos": [100, 200, 400, 800, 1600, 3200, 6400],
+    "apertures": [1.2, 1.4, 1.7, 2.8, 4.0, 5.6],
+    "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 12,
+    "focal_max": 60
+  },
+  "leica_q3": {
+    "make": "LEICA CAMERA AG",
+    "model": "LEICA Q3",
+    "software": "2.0.0.0",
+    "isos": [50, 100, 200, 400, 800, 1600, 3200],
+    "apertures": [1.7, 2.0, 2.8, 4.0, 5.6, 8.0],
+    "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 28,
+    "focal_max": 28
   },
   "leica_q2": {
     "make": "LEICA CAMERA AG",
@@ -99,6 +299,36 @@
     "focal_min": 28,
     "focal_max": 28
   },
+  "olympus_om5": {
+    "make": "OM Digital Solutions",
+    "model": "OM-5",
+    "software": "Version 1.1",
+    "isos": [200, 400, 800, 1600, 3200, 6400],
+    "apertures": [1.8, 2.8, 4.0, 5.6, 8.0],
+    "shutters": [0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 12,
+    "focal_max": 100
+  },
+  "olympus_om1": {
+    "make": "OM Digital Solutions",
+    "model": "OM-1",
+    "software": "Version 1.3",
+    "isos": [200, 400, 800, 1600, 3200, 6400],
+    "apertures": [2.8, 4.0, 5.6, 8.0],
+    "shutters": [0.001, 0.002, 0.004, 0.008, 0.016],
+    "focal_min": 12,
+    "focal_max": 40
+  },
+  "iphone_15_pro": {
+    "make": "Apple",
+    "model": "iPhone 15 Pro",
+    "software": "17.0.2",
+    "isos": [50, 100, 200, 400, 800, 1600],
+    "apertures": [1.78, 2.2, 2.8],
+    "shutters": [0.00025, 0.0005, 0.001, 0.002, 0.004],
+    "focal_min": 6,
+    "focal_max": 77
+  },
   "iphone_14_pro": {
     "make": "Apple",
     "model": "iPhone 14 Pro",
@@ -108,6 +338,16 @@
     "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008],
     "focal_min": 6,
     "focal_max": 77
+  },
+  "iphone_15": {
+    "make": "Apple",
+    "model": "iPhone 15",
+    "software": "17.0.2",
+    "isos": [50, 100, 200, 400, 800],
+    "apertures": [1.6, 2.4],
+    "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008],
+    "focal_min": 6,
+    "focal_max": 26
   },
   "iphone_13": {
     "make": "Apple",
@@ -119,6 +359,16 @@
     "focal_min": 5,
     "focal_max": 26
   },
+  "samsung_s23": {
+    "make": "samsung",
+    "model": "SM-S911B",
+    "software": "S911BXXU3AWBD",
+    "isos": [50, 100, 200, 400, 800, 1600],
+    "apertures": [1.8, 2.2, 2.4],
+    "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008],
+    "focal_min": 6,
+    "focal_max": 24
+  },
   "samsung_s22": {
     "make": "samsung",
     "model": "SM-S901B",
@@ -129,6 +379,16 @@
     "focal_min": 6,
     "focal_max": 24
   },
+  "google_pixel_8_pro": {
+    "make": "Google",
+    "model": "Pixel 8 Pro",
+    "software": "HDR+ 1.0.561436321zd",
+    "isos": [50, 100, 200, 400, 800, 1600],
+    "apertures": [1.68, 1.95, 2.8],
+    "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008],
+    "focal_min": 6,
+    "focal_max": 113
+  },
   "google_pixel_7": {
     "make": "Google",
     "model": "Pixel 7",
@@ -138,15 +398,5 @@
     "shutters": [0.0005, 0.001, 0.002, 0.004, 0.008],
     "focal_min": 6,
     "focal_max": 21
-  },
-  "olympus_om1": {
-    "make": "OM Digital Solutions",
-    "model": "OM-1",
-    "software": "Version 1.3",
-    "isos": [200, 400, 800, 1600, 3200, 6400],
-    "apertures": [2.8, 4.0, 5.6, 8.0],
-    "shutters": [0.001, 0.002, 0.004, 0.008, 0.016],
-    "focal_min": 12,
-    "focal_max": 40
   }
 }
