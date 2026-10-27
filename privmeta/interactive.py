@@ -44,12 +44,35 @@ def _read_choice():
     return _ALIASES.get(raw)
 
 
+def _split_paths(raw):
+    items = []
+    buffer = []
+    quote = None
+    for ch in raw:
+        if quote is not None:
+            if ch == quote:
+                quote = None
+            else:
+                buffer.append(ch)
+        elif ch in ("'", '"'):
+            quote = ch
+        elif ch.isspace():
+            if buffer:
+                items.append("".join(buffer))
+                buffer = []
+        else:
+            buffer.append(ch)
+    if buffer:
+        items.append("".join(buffer))
+    return items
+
+
 def _paths():
     raw = input("  path › ").strip()
     if not raw:
         fail("no path given")
         return []
-    return raw.split()
+    return _split_paths(raw)
 
 
 def _clean_args():
