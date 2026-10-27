@@ -26,7 +26,7 @@ def test_fake_replaces_exif(jpeg_clean, tmp_path):
     ns = _args([jpeg_clean], camera="sony_a7iv", output_dir=str(output), seed=1)
     code = fake_cmd.run(ns)
     assert code == 0
-    target = output / "clean_cleaned.jpg"
+    target = output / "clean_faked.jpg"
     data = piexif.load(str(target))
     assert data["0th"][piexif.ImageIFD.Make] == b"SONY"
 
@@ -42,7 +42,7 @@ def test_fake_with_gps(jpeg_clean, tmp_path):
     )
     code = fake_cmd.run(ns)
     assert code == 0
-    target = output / "clean_cleaned.jpg"
+    target = output / "clean_faked.jpg"
     data = piexif.load(str(target))
     assert data.get("GPS")
 
@@ -65,6 +65,6 @@ def test_fake_preserve(jpeg_with_exif, tmp_path):
     )
     code = fake_cmd.run(ns)
     assert code == 0
-    target = output / "sample_cleaned.jpg"
+    target = output / "sample_faked.jpg"
     data = piexif.load(str(target))
     assert data["0th"][piexif.ImageIFD.Make] == b"SONY"
