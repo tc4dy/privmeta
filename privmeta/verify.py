@@ -1,5 +1,8 @@
 import math
-from datetime import datetime, timezone
+from datetime import datetime, timedelta
+
+
+_FUTURE_TOLERANCE = timedelta(hours=14)
 
 
 def ev_for(iso, aperture, shutter):
@@ -17,10 +20,10 @@ def plausible_ev(iso, aperture, shutter):
 
 def date_not_future(date_str):
     try:
-        parsed = datetime.strptime(date_str, "%Y:%m:%d %H:%M:%S").replace(tzinfo=timezone.utc)
+        parsed = datetime.strptime(date_str, "%Y:%m:%d %H:%M:%S")
     except ValueError:
         return False
-    return parsed <= datetime.now(timezone.utc)
+    return parsed <= datetime.now() + _FUTURE_TOLERANCE
 
 
 def gps_plausible(lat, lon):
