@@ -8,14 +8,14 @@
 **PrivMeta** is a command-line utility for inspecting, cleaning, and modifying EXIF and metadata across images, PDFs, office documents, audio, and video files.
  
 <div align="center">
-  <img src="/photos/privmetalogo.png" alt="PrivMeta Logo" width="140" style="border-radius: 15px; transform: rotate(-12deg);">
+  <img src="photos/privmetalogo.png" alt="PrivMeta Logo" width="140" style="border-radius: 15px; transform: rotate(-12deg);">
 </div>
 Metadata often contains more than you intend to share: exact GPS coordinates, timestamps, camera serial numbers, editing software history, and even embedded thumbnails of the original image. PrivMeta gives you full local control over this data layer. It makes no network requests, and it never modifies files without your explicit instruction.
 
 ---
 
 <div align="center">
-  <img src="/photos/privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
+  <img src="photos/privmeta_banner.gif" alt="PrivMeta Banner" width="100%">
 </div>
 
 ---
@@ -25,8 +25,8 @@ Metadata often contains more than you intend to share: exact GPS coordinates, ti
 | :--- | :--- | :--- |
 | `info` | Inspect metadata, tag counts, and raw segments. | JPEG, PNG, WebP, PDF, DOCX, XLSX, PPTX, MP3, FLAC, MP4, MOV |
 | `clean` | Strip EXIF, GPS, XMP, IPTC, ICC, and comments. | JPEG, PNG, WebP |
-| `fake` | Inject realistic camera, lens, and GPS metadata. | JPEG, PNG, WebP |
-| `shred` | Metadata destruction, re-encoding, and overwrite passes. | JPEG, PNG, WebP, PDF, DOCX, XLSX, PPTX, MP3, FLAC, MP4, MOV |
+| `fake` | Inject realistic camera, lens, and GPS EXIF metadata. | JPEG, PNG, WebP |
+| `shred` | Metadata destruction, re-encoding, and multi-pass overwrite for images. | JPEG, PNG, WebP, PDF, DOCX, XLSX, PPTX, MP3, FLAC, MP4, MOV |
 
 ---
 
@@ -38,17 +38,18 @@ Metadata often contains more than you intend to share: exact GPS coordinates, ti
 - **ICC Profile Removal:** Removes embedded color profiles, which may contain device-related information.
 - **Comment Stripping:** Removes JPEG COM segments and PNG tEXt/zTXt chunks.
 - **Thumbnail Destruction:** Removes embedded EXIF thumbnails, which may contain an image of the original scene even if the main image was cropped or edited.
-- **Fake Camera Injection:** Generates plausible metadata using 15 camera profiles covering brands such as Sony, Canon, Nikon, Fujifilm, Leica, Apple, Samsung, Google, and Olympus.
-- **GPS Spoofing:** Injects coordinates from 35 cities around the world, with configurable radius variance.
+- **Fake Camera Injection:** Generates plausible EXIF metadata using 40 camera profiles across Sony, Canon, Nikon, Fujifilm, Panasonic, Leica, OM System, Apple, Samsung, and Google. Generated values stay internally consistent: the selected lens constrains the focal length range, and aperture, ISO, and shutter values are drawn from the camera's realistic envelope.
+- **GPS Spoofing:** Injects coordinates from 80 cities around the world, with configurable radius variance.
 - **Timeline Simulation:** Distributes timestamps sequentially across multiple files to simulate a chronological event.
 - **Anti-Forensic Shredding:** Re-encodes images to alter original quantization tables and encoder signatures.
-- **Multi-Pass Overwrite:** Repeatedly writes and strips metadata to reduce residual metadata in the resulting file structure.
+- **Multi-Pass Overwrite (images only):** Repeatedly rewrites image files through sequential intermediate stages. PDF, Office, audio, and video files are rewritten once through their respective parsers.
 
 ### [+] Performance & Security
 
 - **Zero Network Calls:** Operates entirely offline. No analytics, crash reports, or external API calls.
 - **In-Memory Streams:** Uses low-memory streaming where possible, helping it run on Termux and low-end devices.
 - **Minimal Core Dependencies:** `clean` and `fake` require `piexif` and `Pillow`. PDF and audio support are optional add-ons.
+- **Mode Preservation:** When `--inplace` is used, the original file's permission mode is restored on the resulting file.
 
 ---
 
@@ -61,10 +62,8 @@ git clone https://github.com/tc4dy/privmeta.git
 cd privmeta
 ./install.sh
 ```
-
-### [i] Windows
-
-```powershell
+### [i] Windows Installation
+```bash
 git clone https://github.com/tc4dy/privmeta.git
 cd privmeta
 .\install.ps1
@@ -99,7 +98,7 @@ $ privmeta info beach.jpg
 ──────────────────────────────────────
    PrivMeta EXIF/Metadata Privacy Tool
 ──────────────────────────────────────
-   v0.1.1 | github.com/tc4dy
+   v0.1.3 | github.com/tc4dy
 
 [+] beach.jpg [jpeg]
 [>] 0th: 8 tags
@@ -117,7 +116,7 @@ $ privmeta clean --all beach.jpg
 ──────────────────────────────────────
    PrivMeta EXIF/Metadata Privacy Tool
 ──────────────────────────────────────
-   v0.1.1 | github.com/tc4dy
+   v0.1.3 | github.com/tc4dy
 
 [>] plan: exif, gps, xmp, iptc, icc, comments, thumbnail
 [+] cleaned: beach.jpg -> beach_cleaned.jpg
@@ -173,7 +172,7 @@ privmeta clean --all -r ~/Pictures/
 
 ### [+] Fake
 
-Inject synthetic metadata. This can be useful for testing pipelines, simulating camera output, or generating sample files with controlled metadata.
+Inject synthetic EXIF metadata. This can be useful for testing pipelines, simulating camera output, or generating sample files with controlled metadata.
 
 ```bash
 privmeta fake --camera sony_a7iv --city istanbul photo.jpg
@@ -198,17 +197,17 @@ privmeta fake --camera fuji_x100v --city tokyo --date-range 2024-05-01:2024-05-0
 | `--thumbnail` | Regenerate the embedded EXIF thumbnail to match the newly injected metadata. |
 | `--seed N` | Seed the random number generator for reproducible output. |
 
-**[>] Available Camera Profiles**
+**[>] Available Camera Profiles (40)**
 
-`sony_a7iv`, `sony_a7iii`, `canon_r6`, `canon_r5`, `nikon_z6ii`, `nikon_z7ii`, `fuji_xt4`, `fuji_x100v`, `panasonic_s5`, `leica_q2`, `iphone_14_pro`, `iphone_13`, `samsung_s22`, `google_pixel_7`, `olympus_om1`
+`canon_r10`, `canon_r3`, `canon_r5`, `canon_r50`, `canon_r6`, `canon_r7`, `canon_r8`, `fuji_gfx100ii`, `fuji_x100v`, `fuji_xh2`, `fuji_xt4`, `fuji_xt5`, `google_pixel_7`, `google_pixel_8_pro`, `iphone_13`, `iphone_14_pro`, `iphone_15`, `iphone_15_pro`, `leica_q2`, `leica_q3`, `nikon_z5`, `nikon_z50`, `nikon_z6ii`, `nikon_z7ii`, `nikon_z8`, `nikon_z9`, `olympus_om1`, `olympus_om5`, `panasonic_gh6`, `panasonic_s5`, `panasonic_s5ii`, `samsung_s22`, `samsung_s23`, `sony_a1`, `sony_a6700`, `sony_a7iii`, `sony_a7iv`, `sony_a7rv`, `sony_a7siii`, `sony_zv_e1`
 
-**[>] Available Cities**
+**[>] Available Cities (80)**
 
-`istanbul`, `ankara`, `izmir`, `bursa`, `antalya`, `london`, `paris`, `berlin`, `madrid`, `rome`, `amsterdam`, `vienna`, `prague`, `athens`, `lisbon`, `newyork`, `losangeles`, `chicago`, `toronto`, `mexicocity`, `tokyo`, `osaka`, `seoul`, `beijing`, `shanghai`, `singapore`, `bangkok`, `dubai`, `cairo`, `capetown`, `sydney`, `melbourne`, `buenosaires`, `saopaulo`, `moscow`
+`amman`, `amsterdam`, `ankara`, `antalya`, `athens`, `auckland`, `bangkok`, `barcelona`, `beijing`, `beirut`, `berlin`, `bogota`, `brussels`, `bucharest`, `budapest`, `buenosaires`, `bursa`, `cairo`, `capetown`, `casablanca`, `chicago`, `copenhagen`, `delhi`, `diyarbakir`, `dubai`, `dublin`, `edinburgh`, `gaziantep`, `helsinki`, `hongkong`, `istanbul`, `izmir`, `jakarta`, `karachi`, `kayseri`, `konya`, `kualalumpur`, `lagos`, `lima`, `lisbon`, `london`, `losangeles`, `madrid`, `manila`, `melbourne`, `mexicocity`, `miami`, `milan`, `montreal`, `moscow`, `mumbai`, `munich`, `nairobi`, `newyork`, `osaka`, `oslo`, `paris`, `porto`, `prague`, `rome`, `sanfrancisco`, `santiago`, `saopaulo`, `seattle`, `seoul`, `shanghai`, `singapore`, `stockholm`, `sydney`, `taipei`, `telaviv`, `tokyo`, `toronto`, `trabzon`, `tunis`, `vancouver`, `vienna`, `warsaw`, `wellington`, `zurich`
 
 ### [<>] Shred
 
-Aggressive metadata destruction for scenarios where standard cleaning is insufficient. The command re-encodes images to alter original encoder signatures and performs multiple overwrite passes.
+Aggressive metadata destruction for scenarios where standard cleaning is insufficient. The command re-encodes images to alter original encoder signatures and performs multiple overwrite passes for image files.
 
 ```bash
 privmeta shred --passes 3 --check photo.jpg
