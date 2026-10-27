@@ -19,6 +19,13 @@ _MEDIA = {
 }
 
 
+def _source_mode(path):
+    try:
+        return os.stat(path).st_mode & 0o777
+    except OSError:
+        return None
+
+
 def _recompress(source, target, quality):
     try:
         with Image.open(source) as image:
@@ -65,22 +72,34 @@ def _check(source):
     return issues
 
 
-def _strip_image(source, target, passes):
+def _strip_image(source, target, passes, label):
     plan = {field: True for field in clean.FIELDS}
     if passes <= 1:
-        clean._clean_image(source, target, plan, "jpeg")
+        clean._clean_image(source, target, plan, label)
         return
     previous = source
-    for pass_num in range(passes):
-        is_final = pass_num == passes - 1
-        current_target = target if is_final else f"{target}.pass{pass_num}"
-        clean._clean_image(previous, current_target, plan, "jpeg")
-        if previous != source and os.path.exists(previous):
-            try:
-                os.unlink(previous)
-            except OSError:
-                pass
-        previous = current_target
+    pass_files = []
+    try:
+        for pass_num in range(passes):
+            is_final = pass_num == passes - 1
+            current_target = target if is_final else f"{target}.pass{pass_num}"
+            if not is_final:
+                pass_files.append(current_target)
+            clean._clean_image(previous, current_target, plan, label)
+            if previous != source and os.path.exists(previous):
+                try:
+                    os.unlink(previous)
+                except OSError:
+                    pass
+            previous = current_target
+    except Exception:
+        for path in pass_files:
+            if os.path.exists(path):
+                try:
+                    os.unlink(path)
+                except OSError:
+                    pass
+        raise
     if previous != target:
         os.replace(previous, target)
 
@@ -89,8 +108,9 @@ def _handle_one(source, args, counters):
     try:
         family, label = detect(source)
         target = resolve_output(source, args.output_dir, suffix="_shred")
+        mode = _source_mode(source) if args.inplace else None
         if family == IMAGE:
-            _strip_image(source, target, args.passes)
+            _strip_image(source, target, args.passes, label)
             if args.quality:
                 temp = target + ".recompressed"
                 try:
@@ -109,6 +129,11 @@ def _handle_one(source, args, counters):
             raise UnsupportedFormat(f"Unsupported format: {label}")
         if args.inplace:
             os.replace(target, source)
+            if mode is not None:
+                try:
+                    os.chmod(source, mode)
+                except OSError:
+                    pass
             target = source
         ok(f"shredded: {source} -> {target}")
         counters["ok"] += 1
