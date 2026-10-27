@@ -8,6 +8,11 @@ def _tick_seconds(seconds_rational):
     return numerator / denominator
 
 
+def _tick_rational(value):
+    numerator, denominator = value
+    return numerator / denominator
+
+
 def test_dms_never_emits_sixty_seconds():
     for value in (41.0, 41.5, 41.99999, 41.999999, 41.9999999, 59.99999999):
         _deg, _min, sec = gps._dms_rational(value)
@@ -16,21 +21,21 @@ def test_dms_never_emits_sixty_seconds():
 
 def test_dms_propagates_minute_carry():
     deg, minute, sec = gps._dms_rational(41.99999999)
-    assert deg == 42
-    assert minute == 0
+    assert _tick_rational(deg) == 42.0
+    assert _tick_rational(minute) == 0.0
     assert _tick_seconds(sec) == 0.0
 
 
 def test_dms_propagates_degree_carry():
     deg, minute, sec = gps._dms_rational(59.99999999)
-    assert deg == 60
-    assert minute == 0
+    assert _tick_rational(deg) == 60.0
+    assert _tick_rational(minute) == 0.0
     assert _tick_seconds(sec) == 0.0
 
 
 def test_dms_uses_absolute_magnitude():
     deg, _min, _sec = gps._dms_rational(-41.5)
-    assert deg == 41
+    assert _tick_rational(deg) == 41.0
 
 
 def test_build_sets_north_east_refs():
